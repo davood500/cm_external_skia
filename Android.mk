@@ -218,9 +218,14 @@ LOCAL_SRC_FILES += \
 ifeq ($(TARGET_ARCH),arm)
 	LOCAL_CFLAGS += -D__CPU_ARCH_ARM
 	LOCAL_SRC_FILES += \
-                src/opts/S32A_D565_Opaque_arm.S \
                 src/opts/S32A_Opaque_BlitRow32_arm.S \
                 src/opts/S32A_Blend_BlitRow32_arm.S
+ifeq ($(TARGET_BOARD_PLATFORM),rk2818)
+	LOCAL_CFLAGS += -DNO_S32A_D565_OPAQUE_ARM
+else
+	LOCAL_SRC_FILES += \
+                src/opts/S32A_D565_Opaque_arm.S
+endif
 endif
 
 ifeq "$(findstring armv5te-vfp,$(TARGET_ARCH_VARIANT))" "armv5te-vfp"
